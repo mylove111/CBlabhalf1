@@ -20,7 +20,8 @@
             class="hover:bg-gray-100 transition"
           >
             <td class="border px-4 py-2">{{ startIndex + index + 1 }}</td>
-            <td class="border px-4 py-2">
+            <td class="border px-4 py-2 flex items-center">
+              <span :class="['fi fi-' + getCountryCode(country.country), 'mr-2']"></span>
               <router-link
                 :to="`/detail/${country.country}`"
                 class="text-blue-500 hover:underline"
@@ -62,6 +63,22 @@
 import { defineComponent, ref, computed, onMounted } from 'vue';
 import CountryService from '@/services/CountryService';
 import type { country } from '@/type';
+
+const countryCodes: { [key: string]: string } = {
+  'United States of America': 'us',
+  'People\'s Republic of China': 'cn',
+  'Japan': 'jp',
+  'Australia': 'au',
+  'France': 'fr',
+  'Netherlands': 'nl',
+  'Great Britain': 'gb',
+  'Republic of Korea': 'kr',
+  'Italy': 'it'
+};
+
+const getCountryCode = (countryName: string): string => {
+  return countryCodes[countryName] || 'us'; // 默认值为 'us'，防止未定义的情况
+};
 
 export default defineComponent({
   name: 'MedalTable',
@@ -113,6 +130,7 @@ export default defineComponent({
       paginatedCountries,
       prevPage,
       nextPage,
+      getCountryCode
     };
   },
 });
